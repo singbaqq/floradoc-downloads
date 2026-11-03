@@ -1,0 +1,69 @@
+---
+import "../styles/global.css";
+import { navLabels, pageLabels, pagePath, productData, siteData } from "../lib/data";
+import type { Locale, PageKind } from "../lib/types";
+interface Props { locale: Locale; kind: PageKind; title?: string; description?: string; version?: string }
+const { locale, kind, title, description, version } = Astro.props;
+const page = pageLabels[locale][kind];
+const pageTitle = title ?? page.title;
+const pageDescription = description ?? page.description;
+const canonical = new URL(pagePath(locale, kind, version), siteData.canonicalDomain).toString();
+const socialImage = new URL("/images/floradoc-social.png", siteData.canonicalDomain).toString();
+const structuredData = JSON.stringify({
+  "@context": "https://schema.org", "@type": "SoftwareApplication", name: "FloraDoc",
+  applicationCategory: "BusinessApplication", operatingSystem: "Windows",
+  description: description ?? productData.product.locales[locale].description, url: canonical
+}).replace(/</g, "\\u003c");
+const otherLocale: Locale = locale === "en" ? "zh-CN" : "en";
+const otherLocaleLabel = locale === "en" ? "中文" : "EN";
+const navItems: PageKind[] = ["features", "downloads", "releases", "faq", "docs"];
+const releaseHref = siteData.github.owner ? "https://github.com/" + siteData.github.owner + "/" + siteData.github.releaseRepository + "/releases" : null;
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={pageDescription} /><meta name="theme-color" content="#f6f4ef" /><meta name="robots" content="index,follow" />
+    <meta property="og:type" content="website" /><meta property="og:site_name" content="FloraDoc" /><meta property="og:title" content={pageTitle} /><meta property="og:description" content={pageDescription} /><meta property="og:url" content={canonical} /><meta property="og:image" content={socialImage} /><meta property="og:locale" content={locale === "en" ? "en_US" : "zh_CN"} />
+    <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={pageTitle} /><meta name="twitter:description" content={pageDescription} /><meta name="twitter:image" content={socialImage} />
+    <link rel="icon" type="image/png" href="/favicon.png" /><link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-CN" href={new URL(pagePath("zh-CN", kind, version), siteData.canonicalDomain)} />
+    <link rel="alternate" hreflang="en" href={new URL(pagePath("en", kind, version), siteData.canonicalDomain)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(pagePath("zh-CN", kind, version), siteData.canonicalDomain)} />
+    <title>{pageTitle}</title>
+    <script type="application/ld+json" set:html={structuredData}></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{locale === "en" ? "Skip to content" : "跳转到正文"}</a>
+    <header class="site-header"><div class="wrap header-inner">
+      <a class="brand" href={pagePath(locale, "home")} aria-label="FloraDoc"><img src="/images/flora.png" alt="" width="40" height="40" /><span>FloraDoc</span></a>
+      <nav class="nav-links" aria-label={locale === "en" ? "Main navigation" : "主导航"}>{navItems.map((item) => <a href={pagePath(locale, item)} aria-current={kind === item ? "page" : undefined}>{navLabels[locale][item]}</a>)}</nav>
+      <div class="header-actions">
+        {releaseHref && <a class="button button-primary button-small" href={releaseHref} rel="noopener noreferrer">{locale === "en" ? "GitHub releases" : "GitHub 发行页"}</a>}
+        <a class="locale-link" href={pagePath(otherLocale, kind, version)} lang={otherLocale} aria-label={locale === "en" ? "切换到中文" : "Switch to English"}>{otherLocaleLabel}</a>
+        <details class="mobile-menu"><summary aria-label={locale === "en" ? "Open menu" : "打开菜单"}><span aria-hidden="true">☰</span></summary><nav aria-label={locale === "en" ? "Mobile navigation" : "移动导航"}>{navItems.map((item) => <a href={pagePath(locale, item)}>{navLabels[locale][item]}</a>)}<a href={pagePath(otherLocale, kind, version)} lang={otherLocale}>{otherLocaleLabel}</a></nav></details>
+      </div>
+    </div></header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer"><div class="wrap"><div class="footer-grid"><div><a class="brand" href={pagePath(locale, "home")}><img src="/images/flora.png" alt="" width="40" height="40" /><span>FloraDoc</span></a><p class="footer-note">{locale === "en" ? "Official product information and downloads." : "官方产品信息与软件下载中心。"}</p></div>
+      <nav class="footer-links" aria-label={locale === "en" ? "Footer navigation" : "页脚导航"}>{navItems.map((item) => <a href={pagePath(locale, item)}>{navLabels[locale][item]}</a>)}{siteData.github.owner && <a href={"https://github.com/" + siteData.github.owner + "/" + siteData.github.releaseRepository} rel="noopener noreferrer">GitHub</a>}</nav></div>
+      <p class="footer-note">© {new Date().getFullYear()} FloraDoc · {locale === "en" ? "Release status is shown from published assets." : "发行状态以实际公开文件为准。"}</p>
+    </div></footer>
+    <script>
+      document.addEventListener("click", async (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+        const button = target.closest<HTMLButtonElement>("[data-copy]");
+        if (!button) return;
+        try {
+          await navigator.clipboard.writeText(button.dataset.copy ?? "");
+          const oldText = button.textContent ?? "";
+          button.textContent = button.dataset.copiedLabel ?? "Copied";
+          window.setTimeout(() => { button.textContent = oldText; }, 1400);
+        } catch {
+          button.textContent = button.dataset.failedLabel ?? "Copy failed";
+        }
+      });
+    </script>
+  </body>
+</html>

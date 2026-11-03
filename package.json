@@ -1,0 +1,35 @@
+{
+  "name": "floradoc-downloads",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.23.4" },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "validate:data": "tsx scripts/validate-data.ts",
+    "prebuild": "tsx scripts/prebuild.ts",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "tsx --test tests/data-contract.test.ts tests/release-sync.test.ts tests/release-prepare.test.ts tests/release-publish.test.ts",
+    "security:dist": "tsx scripts/check-dist.ts",
+    "release:prepare": "tsx scripts/release-prepare.ts",
+    "release:publish": "tsx scripts/release-publish.ts",
+    "release:sync": "tsx scripts/release-sync.ts",
+    "release:verify": "tsx scripts/release-verify.ts",
+    "release:trigger-build": "tsx scripts/trigger-build.ts"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "@tailwindcss/vite": "4.3.4",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "astro": "7.4.5",
+    "tailwindcss": "4.3.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3"
+  }
+}

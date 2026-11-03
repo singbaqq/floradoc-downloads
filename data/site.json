@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0",
+  "canonicalDomain": "https://floradoc.aitodo.net",
+  "defaultLocale": "zh-CN",
+  "locales": ["zh-CN", "en"],
+  "github": {
+    "owner": "singbaqq",
+    "websiteRepository": "floradoc-downloads",
+    "releaseRepository": "floradoc-release",
+    "feedbackUrl": null
+  },
+  "documentationUrl": null,
+  "releaseSync": {
+    "apiVersion": "2022-11-28",
+    "timeoutMs": 15000
+  }
+}

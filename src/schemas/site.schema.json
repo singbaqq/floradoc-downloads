@@ -1,0 +1,22 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object","additionalProperties":false,
+  "required":["schemaVersion","canonicalDomain","defaultLocale","locales","github","documentationUrl","releaseSync"],
+  "properties":{
+    "schemaVersion":{"const":"1.0"},
+    "canonicalDomain":{"type":"string","format":"uri","pattern":"^https://"},
+    "defaultLocale":{"enum":["zh-CN","en"]},
+    "locales":{"type":"array","minItems":2,"uniqueItems":true,"items":{"enum":["zh-CN","en"]}},
+    "github":{"type":"object","additionalProperties":false,"required":["owner","websiteRepository","releaseRepository","feedbackUrl"],"properties":{
+      "owner":{"type":["string","null"],"pattern":"^[A-Za-z0-9-]+$"},
+      "websiteRepository":{"const":"floradoc-downloads"},
+      "releaseRepository":{"const":"floradoc-release"},
+      "feedbackUrl":{"type":["string","null"],"format":"uri","pattern":"^https://"}
+    }},
+    "documentationUrl":{"type":["string","null"],"format":"uri","pattern":"^https://"},
+    "releaseSync":{"type":"object","additionalProperties":false,"required":["apiVersion","timeoutMs"],"properties":{
+      "apiVersion":{"type":"string","minLength":1},
+      "timeoutMs":{"type":"integer","minimum":1000,"maximum":60000}
+    }}
+  }
+}

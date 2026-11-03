@@ -1,0 +1,72 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { navLabels, pagePath, productData, releaseList, releasesFromFiles, siteData } from "../lib/data";
+import type { Locale, PageKind, ReleaseData } from "../lib/types";
+interface Props { locale: Locale; kind: PageKind }
+const { locale, kind } = Astro.props;
+const c = productData.product.locales[locale];
+const statusLabels = locale === "en"
+  ? { supported: "Available", limited: "Limited", experimental: "Experimental", planned: "Planned" }
+  : { supported: "已支持", limited: "有限支持", experimental: "实验性", planned: "计划中" };
+const fileReleases = import.meta.glob("../../data/releases/[0-9]*.json", { eager: true, import: "default" }) as Record<string, ReleaseData>;
+const releases = releaseList.releases.map((version) => releasesFromFiles(fileReleases).find((item) => item.version === version)).filter((item) => item !== undefined);
+const latestStable = releases.find((release) => release.channel === "stable");
+const visibleReleases = kind === "downloads" ? [...releases].sort((a, b) => (a.channel === b.channel ? b.releaseDate.localeCompare(a.releaseDate) : a.channel === "stable" ? -1 : 1)) : releases;
+const topFeatures = c.features.slice(0, 3);
+const workflowSteps = locale === "en"
+  ? [{ icon: "01", title: "Markdown source", detail: "Readable project files", type: "Input" }, { icon: "02", title: "Build or run", detail: "Desktop and command line", type: "Process" }, { icon: "03", title: "Review outputs", detail: "Files and structured reports", type: "Result" }]
+  : [{ icon: "01", title: "Markdown 源文件", detail: "可读的项目内容", type: "输入" }, { icon: "02", title: "构建与执行", detail: "桌面端与命令行", type: "处理" }, { icon: "03", title: "检查输出", detail: "文档与结构化报告", type: "结果" }];
+const docsLink = siteData.documentationUrl;
+const emptyReleaseHeading = locale === "en" ? "Official downloads are coming soon" : "正式下载即将开放";
+const emptyReleaseBody = locale === "en" ? "There is no published public release yet. When a real release is available, this page will show its files, requirements, and SHA-256 checksums." : "目前还没有公开发行版本。正式发布后，这里会展示真实文件、系统要求与 SHA-256 校验值。";
+---
+<SiteLayout locale={locale} kind={kind}>
+  {kind === "home" && <>
+    <section class="hero"><div class="wrap hero-layout">
+      <div><p class="eyebrow">{c.eyebrow}</p><h1>{c.title}</h1><p class="hero-lede">{c.description}</p>
+        <div class="hero-buttons"><a class="button button-primary" href={pagePath(locale, "features")}>{c.heroCta}<span aria-hidden="true">→</span></a><a class="button button-secondary" href={pagePath(locale, "downloads")}>{c.downloadCta}</a><a class="text-link" href={pagePath(locale, "docs")}>{c.docsTitle}<span aria-hidden="true">→</span></a></div>
+        <p class="hero-footnote"><span class="status status-coming">{locale === "en" ? "Coming soon" : "即将开放"}</span><span>{locale === "en" ? "Windows x64 package target · official downloads not yet published" : "Windows x64 发布目标 · 正式下载尚未发布"}</span></p>
+      </div>
+      <div class="hero-visual" aria-label={locale === "en" ? "Illustrated workflow, not a product screenshot" : "工作流程示意图，并非产品截图"} role="img">
+        <div class="glow-orb"></div><div class="workflow-card">
+          <div class="workflow-top"><strong>{locale === "en" ? "Document workflow" : "文档工作流"}<small>{locale === "en" ? "Illustration" : "流程示意"}</small></strong><span>{locale === "en" ? "Reviewable" : "可复查"}</span></div>
+          <div class="workflow-steps">{workflowSteps.map((step) => <div class="workflow-step"><span class="step-icon">{step.icon}</span><span><strong>{step.title}</strong><small>{step.detail}</small></span><b>{step.type}</b></div>)}</div>
+          <div class="workflow-foot"><span>{locale === "en" ? "Local project workspace" : "本地项目工作区"}</span><strong>Markdown → DOCX · XLSX</strong></div>
+        </div>
+      </div>
+    </div></section>
+    <section class="section section-white"><div class="wrap">
+      <div class="section-heading"><p class="eyebrow">{locale === "en" ? "The product" : "产品简介"}</p><h2>{locale === "en" ? "A clear path from source files to finished documents" : "从源文件到交付文档，让每一步清晰可见"}</h2><p>{c.intro}</p></div>
+      <div class="grid-3">{topFeatures.map((feature, index) => <article class="card"><div class="card-kicker"><span>{String(index + 1).padStart(2, "0")}</span><span class={"status " + (feature.status === "limited" ? "status-limited" : feature.status === "experimental" ? "status-experimental" : "")}>{statusLabels[feature.status]}</span></div><h3>{feature.title}</h3><p>{feature.summary}</p></article>)}</div>
+      <p class="section-link"><a class="text-link" href={pagePath(locale, "features")}>{navLabels[locale].features}<span aria-hidden="true">→</span></a></p>
+    </div></section>
+    <section class="section"><div class="wrap split-panel">
+      <article class="panel"><p class="eyebrow">{locale === "en" ? "For teams" : "适用场景"}</p><h3>{locale === "en" ? "Build documents with a repeatable path" : "用可重复的流程构建文档"}</h3><ol class="numbered-list">{c.scenarios.map((item, index) => <li><b>{index + 1}</b><span><strong>{item.title}</strong><br />{item.body}</span></li>)}</ol></article>
+      <article class="screenshot-card"><div class="screenshot-pending"><img src="/images/flora.png" alt="" width="84" height="84" /><span class="status status-planned">{c.screenshotTitle}</span><h3>{c.screenshotPending}</h3><p>{c.screenshotPendingBody}</p></div><p class="caption">{locale === "en" ? "The workflow diagram above is illustrative; it is not an application screenshot." : "上方为流程示意，不是应用截图。"}</p></article>
+    </div></section>
+    <section class="section section-dark"><div class="wrap release-banner"><div><p class="eyebrow">{locale === "en" ? "Latest stable release" : "最新稳定版本"}</p>{latestStable ? <><h3>FloraDoc {latestStable.version}</h3><p>{latestStable.releaseNotes[locale][0]}</p><small>{locale === "en" ? "Released " : "发布日期："}{latestStable.releaseDate}</small></> : <><h3>{emptyReleaseHeading}</h3><p>{emptyReleaseBody}</p></>}</div><a class="button button-secondary" href={latestStable?.assets[0]?.downloadUrl ?? pagePath(locale, "downloads")} rel={latestStable?.assets[0] ? "noopener noreferrer" : undefined}>{latestStable?.assets[0] ? (locale === "en" ? "Download latest stable" : "下载最新稳定版") : c.downloadCta}<span aria-hidden="true">→</span></a></div></section>
+    <section class="section section-white"><div class="wrap split-panel"><article class="panel"><p class="eyebrow">{c.docsTitle}</p><h3>{locale === "en" ? "Get started with the user guide" : "从公开使用文档开始"}</h3><p>{c.docsBody}</p><a class="text-link" href={pagePath(locale, "docs")}>{locale === "en" ? "Documentation status" : "查看文档状态"}<span aria-hidden="true">→</span></a></article><article class="panel"><p class="eyebrow">{navLabels[locale].faq}</p><h3>{locale === "en" ? "Quick answers" : "快速了解 FloraDoc"}</h3><div class="faq-list">{c.faqs.slice(0, 2).map((faq) => <details><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</div><p><a class="text-link" href={pagePath(locale, "faq")}>{locale === "en" ? "See all questions" : "查看全部常见问题"}<span aria-hidden="true">→</span></a></p></article></div></section>
+  </>}
+  {kind === "features" && <>
+    <section class="page-hero"><div class="wrap"><p class="eyebrow">{navLabels[locale].features}</p><h1>{locale === "en" ? "Capabilities, with their current status" : "产品能力与当前支持状态"}</h1><p>{locale === "en" ? "Each item reflects implemented and reviewable behavior in the current source. Limited and experimental areas are labeled." : "以下内容按当前可核实的实现状态整理；有限支持与实验性能力会单独标明。"}</p></div></section>
+    <section class="section section-compact"><div class="wrap">{c.features.map((feature, index) => <article class="feature-row"><span class="feature-number">{String(index + 1).padStart(2, "0")}</span><div><h3>{feature.title}</h3><p>{feature.summary}</p></div><span class={"status " + (feature.status === "limited" ? "status-limited" : feature.status === "experimental" ? "status-experimental" : feature.status === "planned" ? "status-planned" : "")}>{statusLabels[feature.status]}</span></article>)}</div></section>
+  </>}
+  {(kind === "downloads" || kind === "releases") && <>
+    <section class="page-hero"><div class="wrap"><p class="eyebrow">{navLabels[locale][kind]}</p><h1>{kind === "downloads" ? c.releaseTitle : (locale === "en" ? "Every release, with verifiable files" : "版本说明、文件与校验信息")}</h1><p>{kind === "downloads" ? c.releaseBody : (locale === "en" ? "Browse published versions and review each file's platform, size, and SHA-256 checksum." : "浏览已发布版本，查看每个文件的平台、大小与 SHA-256 校验值。")}</p></div></section>
+    <section class="section section-compact"><div class="wrap">
+      {visibleReleases.length === 0 ? <div class="empty-state"><span class="status status-coming">{locale === "en" ? "Coming soon" : "即将开放"}</span><h2>{emptyReleaseHeading}</h2><p>{emptyReleaseBody}</p><p>{locale === "en" ? "Supported target: Windows x64. Exact system requirements will be stated with the release." : "当前发布目标：Windows x64。具体系统要求将在发行说明中公布。"}</p></div> : <div class="release-list">{visibleReleases.map((release) => <article class="release-card"><div class="release-head"><div><span class="status">{release.channel === "stable" ? (locale === "en" ? "Stable" : "稳定版") : (locale === "en" ? "Preview" : "预览版")}</span><h2><a class="text-link" href={pagePath(locale, "releases", release.version)}>FloraDoc {release.version}<span aria-hidden="true">→</span></a></h2></div><time class="release-date" datetime={release.releaseDate}>{release.releaseDate}</time></div><p>{release.releaseNotes[locale][0]}</p><div class="asset-list">{release.assets.map((asset) => <div class="asset"><div><strong>{asset.name}</strong><small>{asset.platform} · {asset.architecture} · {(asset.fileSize / 1048576).toFixed(1)} MB</small><code class="hash">SHA-256: {asset.sha256}</code><button class="copy-button" type="button" data-copy={asset.sha256} data-copied-label={locale === "en" ? "Copied" : "已复制"} data-failed-label={locale === "en" ? "Copy failed" : "复制失败"}>{locale === "en" ? "Copy SHA-256" : "复制 SHA-256"}</button></div><a class="button button-secondary button-small" href={asset.downloadUrl} rel="noopener noreferrer" download>{locale === "en" ? "Download" : "下载"}</a></div>)}</div></article>)}</div>}
+    </div></section>
+  </>}
+  {kind === "faq" && <>
+    <section class="page-hero"><div class="wrap"><p class="eyebrow">{navLabels[locale].faq}</p><h1>{locale === "en" ? "Answers before you download" : "下载前，先了解这些信息"}</h1><p>{locale === "en" ? "Straight answers about current release, platform, and product capabilities." : "关于当前发行状态、平台和产品能力的直接说明。"}</p></div></section>
+    <section class="section section-compact"><div class="wrap faq-list">{c.faqs.map((faq) => <details><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</div></section>
+  </>}
+  {kind === "docs" && <>
+    <section class="page-hero"><div class="wrap"><p class="eyebrow">{navLabels[locale].docs}</p><h1>{locale === "en" ? "Learn FloraDoc, step by step" : "从项目与文档开始使用 FloraDoc"}</h1><p>{c.docsBody}</p></div></section>
+    <section class="section section-compact"><div class="wrap prose">
+      {docsLink ? <div class="release-banner section-dark"><div><h2>{locale === "en" ? "Open the user guide" : "打开使用文档"}</h2><p>{locale === "en" ? "Read the public FloraDoc user documentation." : "阅读公开的 FloraDoc 使用文档。"}</p></div><a class="button button-secondary" href={docsLink} rel="noopener noreferrer">{locale === "en" ? "Open documentation" : "前往使用文档"}<span aria-hidden="true">↗</span></a></div> : <div class="empty-state"><span class="status status-coming">{locale === "en" ? "In preparation" : "整理中"}</span><h2>{locale === "en" ? "Public user documentation is coming soon" : "公开使用文档正在准备中"}</h2><p>{c.docsBody}</p></div>}
+      <div class="callout" style="margin-top: 24px">{locale === "en" ? "Only user-facing material will be linked here. Internal design notes, development plans, and repository files are not public documentation." : "这里仅链接面向用户的资料。内部设计记录、开发计划和仓库文件不会作为公开使用文档。"}</div>
+    </div></section>
+  </>}
+  {kind === "home" && <section class="section section-compact"><div class="wrap"><div class="callout"><strong>{c.supportTitle}</strong><p>{c.supportBody}</p>{siteData.github.feedbackUrl && <a class="text-link" href={siteData.github.feedbackUrl} rel="noopener noreferrer">{locale === "en" ? "Send feedback" : "提交反馈"} ↗</a>}</div></div></section>}
+</SiteLayout>

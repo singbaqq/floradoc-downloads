@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://floradoc.aitodo.net/sitemap-index.xml

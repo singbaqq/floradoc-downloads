@@ -1,0 +1,11 @@
+---
+import ReleaseDetail from "../../components/ReleaseDetail.astro";
+import type { ReleaseData } from "../../lib/types";
+export function getStaticPaths() {
+  const releaseFiles = import.meta.glob("../../../data/releases/[0-9]*.json", { eager: true, import: "default" }) as Record<string, ReleaseData>;
+  const releases = Object.values(releaseFiles);
+  return releases.map((release) => ({ params: { version: release.version }, props: { release } }));
+}
+const { release } = Astro.props;
+---
+<ReleaseDetail locale="zh-CN" release={release} />

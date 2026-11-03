@@ -1,0 +1,246 @@
+{
+  "schemaVersion": "1.0",
+  "product": {
+    "id": "floradoc",
+    "name": "FloraDoc",
+    "targetPlatforms": [
+      "windows-x64"
+    ],
+    "releaseStatus": "comingSoon",
+    "documentationStatus": "comingSoon",
+    "locales": {
+      "zh-CN": {
+        "eyebrow": "面向文档交付的桌面工具",
+        "title": "从 Markdown 出发，完成可重复的文档交付。",
+        "description": "FloraDoc 将 Markdown、样式与模板、桌面工作区和命令行工具连接起来，让文档生成过程清晰、可检查、可复用。",
+        "heroCta": "了解产品能力",
+        "downloadCta": "查看下载状态",
+        "intro": "围绕一份可读、可维护的 Markdown 源文件，组织文档构建、工具执行、资源和运行记录。",
+        "workflowTitle": "让文件保持清晰，让交付过程可追踪",
+        "workflowBody": "以工作区中的 Markdown、样式与模板作为输入，通过 FloraDoc 桌面应用或 CLI 运行构建，并查看结构化结果。",
+        "screenshotTitle": "FloraDoc 桌面端",
+        "screenshotCaption": "来自 FloraDoc 桌面应用的真实界面截图。",
+        "screenshotPending": "界面预览准备中",
+        "screenshotPendingBody": "正式产品截图尚未收录。我们会在确认当前版本界面后补充。",
+        "releaseTitle": "软件下载",
+        "releaseBody": "公开发行包与校验信息准备就绪后，将在这里提供下载。",
+        "docsTitle": "使用文档",
+        "docsBody": "面向用户的正式使用文档正在整理中。内部设计与开发资料不会作为公开文档发布。",
+        "supportTitle": "技术支持与反馈",
+        "supportBody": "公开反馈渠道尚未配置。发布前会补充可用的支持入口。",
+        "features": [
+          {
+            "id": "markdown",
+            "title": "以 Markdown 组织内容",
+            "summary": "将 Markdown 文件作为文档构建输入，保留源文件与本地图片资源的文件路径。",
+            "status": "supported"
+          },
+          {
+            "id": "doc-build",
+            "title": "生成 Word 与 Excel 文档",
+            "summary": "使用样式资源将 Markdown 构建为 DOCX 或 XLSX，并生成结构化构建和运行报告。",
+            "status": "supported"
+          },
+          {
+            "id": "templates",
+            "title": "复用样式与 Word 模板",
+            "summary": "从资源目录选择样式与受支持的原生 DOCX 模板；XLSX 原生模板适配目前不支持。",
+            "status": "supported"
+          },
+          {
+            "id": "workspace",
+            "title": "项目工作区与资源管理",
+            "summary": "通过桌面端或 CLI 创建、检查和校验文档项目；管理模板、样例、文档、图片和附件目录。",
+            "status": "supported"
+          },
+          {
+            "id": "flows",
+            "title": "工具与流程执行",
+            "summary": "按 Manifest 调用工具，也可执行带输入、步骤和输出映射的工作流。",
+            "status": "supported"
+          },
+          {
+            "id": "docx-roundtrip",
+            "title": "DOCX 提取、重建与比较",
+            "summary": "可提取文档模型、语义重建、恢复原包并生成比较报告；不支持或未评估的结构会单独诊断。",
+            "status": "limited"
+          },
+          {
+            "id": "pptx",
+            "title": "PowerPoint 构建",
+            "summary": "已有 Markdown 到 PPTX 的模板与页面构建链路；整体视觉验收仍需完成，因此目前列为实验性。",
+            "status": "experimental"
+          }
+        ],
+        "scenarios": [
+          {
+            "title": "样式化技术文档",
+            "body": "从 Markdown 和样式资源生成一致的 DOCX 文档。"
+          },
+          {
+            "title": "结构化表格输出",
+            "body": "将 Markdown 内容按已配置格式输出为 XLSX 工作簿。"
+          },
+          {
+            "title": "可复查的自动化构建",
+            "body": "通过 CLI 或流程描述文件执行工具，并查看每一步的状态与产物报告。"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "现在可以下载 FloraDoc 吗？",
+            "answer": "公开 Release 仓与正式安装包尚未建立。下载入口会在真实版本发布后开放；目前页面不会显示虚构的文件或校验值。"
+          },
+          {
+            "question": "支持哪些系统？",
+            "answer": "当前可核实的发布目标为 Windows x64。正式版本发布时会公布具体系统版本要求。"
+          },
+          {
+            "question": "可以把 DOCX 完整往返还原吗？",
+            "answer": "DOCX 工具会标记不支持或未评估的结构。语义重建与原包恢复是不同操作，不能据此承诺任意文档都能无损往返。"
+          },
+          {
+            "question": "PPTX 构建已经正式支持了吗？",
+            "answer": "构建链路已实现，但整体视觉验收尚未完成，因此网站将其标为实验性功能。"
+          },
+          {
+            "question": "如何安装 FloraDoc？",
+            "answer": "公开安装包尚未发布。正式发行后，下载中心会标明文件类型、系统要求和安装说明；当前不会提供占位文件。"
+          },
+          {
+            "question": "可以处理哪些文件格式？",
+            "answer": "当前有 Markdown 输入与 DOCX、XLSX 输出能力。原生 XLSX 模板适配尚不支持；PPTX 构建目前仍属实验性。"
+          },
+          {
+            "question": "如何校验下载文件？",
+            "answer": "正式版本会显示每个发行文件的 SHA-256。下载后可在 Windows PowerShell 使用 Get-FileHash -Algorithm SHA256 <文件路径>，并与页面值核对。"
+          },
+          {
+            "question": "如何获取更新？",
+            "answer": "正式稳定版发布后，下载中心会展示版本号、发行日期、更新摘要和真实文件。也可以在发行记录中查看历史版本。"
+          },
+          {
+            "question": "遇到问题时在哪里反馈？",
+            "answer": "公开反馈渠道尚未配置。反馈入口会在确认可用后添加到网站。"
+          }
+        ]
+      },
+      "en": {
+        "eyebrow": "A desktop workspace for document delivery",
+        "title": "Start with Markdown. Deliver documents you can review and repeat.",
+        "description": "FloraDoc brings Markdown, styles and templates, a desktop workspace, and command-line tools into a clear, reusable document workflow.",
+        "heroCta": "Explore product capabilities",
+        "downloadCta": "Check download status",
+        "intro": "Organize document builds, tool runs, resources, and reports around readable Markdown source files.",
+        "workflowTitle": "Keep the files clear. Make the process traceable.",
+        "workflowBody": "Build from Markdown and selected styles or templates in a workspace, run the process through FloraDoc Desktop or the CLI, then inspect structured results.",
+        "screenshotTitle": "FloraDoc for desktop",
+        "screenshotCaption": "A genuine screenshot from the FloraDoc desktop application.",
+        "screenshotPending": "Interface preview coming soon",
+        "screenshotPendingBody": "An approved product screenshot has not been added yet. We will add one after confirming the current application version.",
+        "releaseTitle": "Download FloraDoc",
+        "releaseBody": "Downloads and checksums will appear here when an official release is ready.",
+        "docsTitle": "User documentation",
+        "docsBody": "Public user documentation is being prepared. Internal design and development material will not be published as user guidance.",
+        "supportTitle": "Support and feedback",
+        "supportBody": "A public support channel has not been configured yet. A verified contact option will be added before release.",
+        "features": [
+          {
+            "id": "markdown",
+            "title": "Markdown as the content source",
+            "summary": "Build from Markdown files while keeping source documents and local image assets as regular files.",
+            "status": "supported"
+          },
+          {
+            "id": "doc-build",
+            "title": "Word and Excel output",
+            "summary": "Build DOCX or XLSX files from Markdown and style resources, with structured build and run reports.",
+            "status": "supported"
+          },
+          {
+            "id": "templates",
+            "title": "Reusable styles and Word templates",
+            "summary": "Select styles and supported native DOCX templates from the resource catalog. Native XLSX template adapters are not currently supported.",
+            "status": "supported"
+          },
+          {
+            "id": "workspace",
+            "title": "Project workspace and resources",
+            "summary": "Create, inspect, and validate document projects through Desktop or CLI, with directories for templates, examples, documents, images, and attachments.",
+            "status": "supported"
+          },
+          {
+            "id": "flows",
+            "title": "Tools and workflow execution",
+            "summary": "Run tools through manifests and execute workflows with mapped inputs, steps, and outputs.",
+            "status": "supported"
+          },
+          {
+            "id": "docx-roundtrip",
+            "title": "DOCX extraction, rebuild, and comparison",
+            "summary": "Extract a document model, rebuild semantically, restore the original package, and produce comparison reports. Unsupported or unevaluated structures are diagnosed.",
+            "status": "limited"
+          },
+          {
+            "id": "pptx",
+            "title": "PowerPoint builds",
+            "summary": "A Markdown-to-PPTX template and page-build path is implemented. Full visual acceptance is still pending, so this capability is experimental.",
+            "status": "experimental"
+          }
+        ],
+        "scenarios": [
+          {
+            "title": "Styled technical documents",
+            "body": "Generate consistent DOCX files from Markdown and style resources."
+          },
+          {
+            "title": "Structured spreadsheet output",
+            "body": "Map Markdown content into XLSX workbooks using configured format files."
+          },
+          {
+            "title": "Reviewable automation",
+            "body": "Run tools from the CLI or workflow manifests and inspect each step and its output report."
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Can I download FloraDoc today?",
+            "answer": "The public release repository and official installer are not available yet. Downloads will appear after a real release; this site will not show invented files or checksums."
+          },
+          {
+            "question": "Which systems are supported?",
+            "answer": "The currently documented package target is Windows x64. Exact Windows version requirements will be published with a stable release."
+          },
+          {
+            "question": "Can every DOCX round-trip without loss?",
+            "answer": "The DOCX tools report structures that are unsupported or not evaluated. Semantic rebuild and package restore are separate operations, so lossless round-trip behavior is not promised for every document."
+          },
+          {
+            "question": "Is PPTX generation officially supported?",
+            "answer": "The build path is implemented, but full visual acceptance is incomplete. The site labels it experimental."
+          },
+          {
+            "question": "How do I install FloraDoc?",
+            "answer": "An official installer has not been published. Once a release is available, the download center will show the file type, system requirements, and installation guidance. No placeholder file is offered."
+          },
+          {
+            "question": "Which file formats can FloraDoc handle?",
+            "answer": "The current workflow accepts Markdown and can build DOCX and XLSX files. Native XLSX template adapters are not supported yet; PPTX builds remain experimental."
+          },
+          {
+            "question": "How do I verify a download?",
+            "answer": "Each published file will have a SHA-256 value. After downloading on Windows, run Get-FileHash -Algorithm SHA256 <file-path> in PowerShell and compare the result with the value on the site."
+          },
+          {
+            "question": "How do I get updates?",
+            "answer": "After an official stable version is released, the download center will show its version, date, summary, and real files. The release history lists earlier versions."
+          },
+          {
+            "question": "Where can I report a problem?",
+            "answer": "A public feedback channel has not been configured yet. A verified contact option will be added when available."
+          }
+        ]
+      }
+    }
+  }
+}

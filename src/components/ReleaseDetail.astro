@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { pagePath } from "../lib/data";
+import type { Locale, ReleaseData } from "../lib/types";
+interface Props { locale: Locale; release: ReleaseData }
+const { locale, release } = Astro.props;
+const notes = release.releaseNotes[locale];
+const channel = release.channel === "stable" ? (locale === "en" ? "Stable release" : "稳定版") : (locale === "en" ? "Preview release" : "预览版");
+---
+<SiteLayout locale={locale} kind="releases" title={"FloraDoc " + release.version + " — " + (locale === "en" ? "Release notes" : "发行说明")} description={notes[0] ?? ""} version={release.version}>
+  <section class="page-hero"><div class="wrap"><p class="breadcrumb"><a href={pagePath(locale, "releases")}>{locale === "en" ? "Releases" : "发行记录"}</a> / {release.version}</p><p class="eyebrow">{channel}</p><h1>FloraDoc {release.version}</h1><p>{locale === "en" ? "Released " : "发布日期："}<time datetime={release.releaseDate}>{release.releaseDate}</time></p></div></section>
+  <section class="section section-compact"><div class="wrap split-panel">
+    <article class="release-card"><h2>{locale === "en" ? "Release notes" : "发行说明"}</h2><ul class="prose">{notes.map((note) => <li>{note}</li>)}</ul><h2>{locale === "en" ? "System requirements" : "系统要求"}</h2><ul class="prose">{release.requirements[locale].map((requirement) => <li>{requirement}</li>)}</ul><h2>{locale === "en" ? "Installation" : "安装说明"}</h2><ol class="prose">{release.installation[locale].map((step) => <li>{step}</li>)}</ol></article>
+    <aside class="release-card"><h2>{locale === "en" ? "Downloads and checksums" : "下载与文件校验"}</h2><div class="asset-list">{release.assets.map((asset) => <div class="asset"><div><strong>{asset.name}</strong><small>{asset.platform} · {asset.architecture} · {(asset.fileSize / 1048576).toFixed(1)} MB</small><code class="hash">SHA-256: {asset.sha256}</code><button class="copy-button" type="button" data-copy={asset.sha256} data-copied-label={locale === "en" ? "Copied" : "已复制"} data-failed-label={locale === "en" ? "Copy failed" : "复制失败"}>{locale === "en" ? "Copy SHA-256" : "复制 SHA-256"}</button></div><a class="button button-secondary button-small" href={asset.downloadUrl} rel="noopener noreferrer" download>{locale === "en" ? "Download" : "下载"}</a></div>)}</div>{release.checksumsUrl && <p><a class="text-link" href={release.checksumsUrl} rel="noopener noreferrer">{locale === "en" ? "Download checksum file" : "下载校验文件"} ↗</a></p>}</aside>
+  </div></section>
+</SiteLayout>
