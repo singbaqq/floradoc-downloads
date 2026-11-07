@@ -32,6 +32,10 @@ export class GitHubApi {
   async tagRefExists(tag: string): Promise<boolean> {
     const response = await this.request(this.base + "/git/ref/tags/" + encodeURIComponent(tag));
     if (response.status === 404) return false;
+    if (response.status === 409) {
+      const body = await response.json().catch(() => null) as { message?: string } | null;
+      if (body?.message === "Git Repository is empty.") return false;
+    }
     if (!response.ok) throw new Error("Could not inspect Git tag: HTTP " + response.status);
     return true;
   }

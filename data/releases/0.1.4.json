@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "version": "0.1.4",
+  "tag": "v0.1.4",
+  "channel": "preview",
+  "releaseDate": "2026-11-07",
+  "releaseNotes": {
+    "zh-CN": [
+      "FloraDoc Word Preview Windows x64 试用版，提供单文件 Markdown 创建 DOCX、DOCX 模板填充以及已验证的 Style/Template 查询与选择。",
+      "包含 Windows x64 安装器和便携 ZIP；安装器可选择当前用户或所有用户安装。",
+      "floradoc update 使用官网 HTTPS 清单检查更新，并在下载后校验 SHA-256。"
+    ],
+    "en": [
+      "FloraDoc Word Preview trial for Windows x64 supports single-file Markdown to DOCX, DOCX template filling, and verified Style/Template discovery and selection.",
+      "Includes a Windows x64 installer and portable ZIP. The installer supports per-user or all-users installation.",
+      "floradoc update checks the official HTTPS feed and verifies the installer SHA-256 after download."
+    ]
+  },
+  "requirements": {
+    "zh-CN": [
+      "Windows 10 或更新版本，x64；无需安装 .NET SDK、Python 或 Microsoft Word。"
+    ],
+    "en": [
+      "Windows 10 or later, x64; no .NET SDK, Python, or Microsoft Word installation is required."
+    ]
+  },
+  "installation": {
+    "zh-CN": [
+      "普通用户运行 FloraDoc-Setup-win-x64.exe，按需选择当前用户或所有用户安装；安装后重新打开终端并运行 floradoc --version。",
+      "便携 ZIP 解压到固定目录后运行其中的 floradoc.exe；便携包不配置 PATH，且不支持安装器驱动的更新和卸载。"
+    ],
+    "en": [
+      "Run FloraDoc-Setup-win-x64.exe and choose per-user or all-users installation. Reopen the terminal and run floradoc --version.",
+      "Extract the portable ZIP to a fixed folder and run its floradoc.exe. The portable package does not configure PATH or support installer-driven updates and uninstall."
+    ]
+  },
+  "assets": [
+    {
+      "name": "FloraDoc Word Preview Windows x64 Installer",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "installer",
+      "fileName": "FloraDoc-Setup-win-x64.exe",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.4/FloraDoc-Setup-win-x64.exe",
+      "fileSize": 10119234,
+      "sha256": "00b0bcd4dcf5c3530d221698c48a9228e15e10384b735cbc7b1219eba3e80ff5"
+    },
+    {
+      "name": "FloraDoc Word Preview Windows x64 Portable ZIP",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "zip",
+      "fileName": "FloraDoc-Word-Preview-win-x64.zip",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.4/FloraDoc-Word-Preview-win-x64.zip",
+      "fileSize": 14432794,
+      "sha256": "bf4d96e7f85169f3d4c2c154d54c6f8c3c67780509ea33fffd7cb7fecd726bd4"
+    }
+  ],
+  "checksumsUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.4/SHA256SUMS.txt"
+}

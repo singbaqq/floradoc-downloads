@@ -51,6 +51,8 @@ npm run release:publish -- --staging release-staging\1.0.0
 
 Preparation copies the provided files into a new staging directory, calculates byte sizes and SHA-256, writes a draft manifest and `SHA256SUMS.txt`, and refuses to overwrite an existing staging path. The publish command verifies those hashes and prints a dry run. It never creates a release unless `--apply` is supplied.
 
+Release asset URLs in `floradoc-release.json` are constructed from the immutable version tag and filename. GitHub may return a temporary `untagged-*` URL while a draft has no tag ref; do not persist that draft-only URL into release metadata.
+
 ## Create and review a GitHub draft
 
 Set these variables in the shell running the publisher:
@@ -76,5 +78,7 @@ npm run release:verify -- 1.0.0
 ```
 
 Sync is idempotent and never removes prior website release history. API errors, missing metadata, mismatched tags/channels, URL/size inconsistencies, and duplicate versions stop the operation. Verification downloads each public package and recomputes its SHA-256.
+
+The static endpoint `/downloads/latest.json` is built from the synced release snapshot. It selects the highest semantic version that has a Windows x64 installer and emits the updater contract (`schemaVersion`, `version`, `packageUrl`, `sha256`, and Chinese `releaseNotes`). The endpoint returns 404 until a qualifying release exists. Keep installer URLs HTTPS; the FloraDoc updater rejects non-HTTPS URLs and mismatched hashes.
 
 To refresh Pages after the GitHub release is published, configure the Pages build hook as described in [Cloudflare Pages setup](cloudflare-pages.md). Do not put tokens or build-hook URLs in source files.

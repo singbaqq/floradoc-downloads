@@ -18,6 +18,9 @@ function notesBody(draft: Draft): string {
     "\n\n## 安装说明 / Installation\n\n中文\n" + draft.installation["zh-CN"].map((line) => "- " + line).join("\n") +
     "\n\nEnglish\n" + draft.installation.en.map((line) => "- " + line).join("\n");
 }
+function releaseAssetUrl(owner: string, repository: string, tag: string, fileName: string): string {
+  return "https://github.com/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repository) + "/releases/download/" + encodeURIComponent(tag) + "/" + encodeURIComponent(fileName);
+}
 
 function validateDraft(draft: Draft): void {
   if (draft.schemaVersion !== "1.0" || !semverPattern.test(draft.version) || draft.tag !== "v" + draft.version) throw new Error("Invalid staging draft version or tag.");
@@ -104,23 +107,22 @@ export async function publishRelease(stagingDir: string, apply: boolean, depende
     const existing = release.assets.find((item) => item.name === asset.fileName);
     if (existing) {
       await existingAssetBytes(api, release, existing, actualFiles.get(asset.fileName)!);
-      uploaded.set(asset.fileName, existing.browser_download_url);
+      uploaded.set(asset.fileName, releaseAssetUrl(owner, site.github.releaseRepository, draft.tag, asset.fileName));
     } else {
-      const result = await api.upload(release, asset.fileName, actualFiles.get(asset.fileName)!);
-      uploaded.set(asset.fileName, result.browser_download_url);
+      await api.upload(release, asset.fileName, actualFiles.get(asset.fileName)!);
+      uploaded.set(asset.fileName, releaseAssetUrl(owner, site.github.releaseRepository, draft.tag, asset.fileName));
     }
   }
   const oldChecksums = release.assets.find((item) => item.name === draft.checksumsFile);
-  let checksumAsset: ApiAsset;
   if (oldChecksums) {
     await existingAssetBytes(api, release, oldChecksums, checksumBytes);
-    checksumAsset = oldChecksums;
-  } else checksumAsset = await api.upload(release, draft.checksumsFile, checksumBytes, "text/plain; charset=utf-8");
+  } else await api.upload(release, draft.checksumsFile, checksumBytes, "text/plain; charset=utf-8");
+  const checksumsUrl = releaseAssetUrl(owner, site.github.releaseRepository, draft.tag, draft.checksumsFile);
   const publicData: ReleaseData = {
     schemaVersion: "1.0", version: draft.version, tag: draft.tag, channel: draft.channel, releaseDate: draft.releaseDate,
     releaseNotes: draft.releaseNotes, requirements: draft.requirements, installation: draft.installation,
     assets: draft.assets.map((asset) => ({ name: asset.name, platform: asset.platform, architecture: asset.architecture, format: asset.format, fileName: asset.fileName, downloadUrl: uploaded.get(asset.fileName)!, fileSize: asset.fileSize, sha256: asset.sha256 })),
-    checksumsUrl: checksumAsset.browser_download_url
+    checksumsUrl
   };
   const metadataBytes = new TextEncoder().encode(JSON.stringify(publicData, null, 2) + "\n");
   const existingMetadata = release.assets.find((asset) => asset.name === "floradoc-release.json");

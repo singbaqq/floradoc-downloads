@@ -35,7 +35,7 @@ test("release publisher resumes a partial draft and is idempotent", async () => 
       const url = String(inputValue);
       const method = init?.method ?? "GET";
       if (url.endsWith("/releases/tags/v1.0.0")) return state.release ? new Response(JSON.stringify(state.release), { status: 200 }) : new Response("missing", { status: 404 });
-      if (url.endsWith("/git/ref/tags/v1.0.0")) return new Response("missing", { status: 404 });
+      if (url.endsWith("/git/ref/tags/v1.0.0")) return new Response(JSON.stringify({ message: "Git Repository is empty.", status: "409" }), { status: 409 });
       if (url.endsWith("/releases") && method === "POST") {
         createCount++;
         const payload = JSON.parse(String(init?.body)) as { tag_name: string; prerelease: boolean };
@@ -47,9 +47,14 @@ test("release publisher resumes a partial draft and is idempotent", async () => 
         const name = new URL(url).searchParams.get("name")!;
         if (name === "SHA256SUMS.txt" && failChecksumOnce) { failChecksumOnce = false; return new Response("temporary upload failure", { status: 500 }); }
         const body = new Uint8Array(init?.body as ArrayBuffer);
-        const asset: ApiAsset = { id: nextId++, name, size: body.length, browser_download_url: "https://github.com/acme/floradoc-release/releases/download/v1.0.0/" + name, digest: "sha256:" + createHash("sha256").update(body).digest("hex") };
+        const asset: ApiAsset = { id: nextId++, name, size: body.length, browser_download_url: "https://github.com/acme/floradoc-release/releases/download/untagged-placeholder/" + name, digest: "sha256:" + createHash("sha256").update(body).digest("hex") };
         stored.set(asset.id, body);
         state.release!.assets.push(asset);
+        if (name === "floradoc-release.json") {
+          const manifest = JSON.parse(new TextDecoder().decode(body)) as { assets: Array<{ downloadUrl: string }>; checksumsUrl: string };
+          assert.equal(manifest.assets[0]?.downloadUrl, "https://github.com/acme/floradoc-release/releases/download/v1.0.0/FloraDoc-1.0.0-win-x64.zip");
+          assert.equal(manifest.checksumsUrl, "https://github.com/acme/floradoc-release/releases/download/v1.0.0/SHA256SUMS.txt");
+        }
         successfulUploads++;
         return new Response(JSON.stringify(asset), { status: 201 });
       }
