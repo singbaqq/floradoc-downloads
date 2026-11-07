@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "version": "0.1.5",
+  "tag": "v0.1.5",
+  "channel": "preview",
+  "releaseDate": "2026-11-07",
+  "releaseNotes": {
+    "zh-CN": [
+      "FloraDoc Word Preview Windows x64 试用版，功能范围与 0.1.4 相同。",
+      "修正随包升级说明，指向已上线的官方更新清单；更新器仅对安装版运行，下载后验证 SHA-256。"
+    ],
+    "en": [
+      "FloraDoc Word Preview trial for Windows x64; supported capabilities are unchanged from 0.1.4.",
+      "Corrected the bundled upgrade instructions to reference the live official update feed. The updater is for installer-based installs and verifies SHA-256 before launch."
+    ]
+  },
+  "requirements": {
+    "zh-CN": [
+      "Windows 10 或更新版本，x64；无需安装 .NET SDK、Python 或 Microsoft Word。"
+    ],
+    "en": [
+      "Windows 10 or later, x64; no .NET SDK, Python, or Microsoft Word installation is required."
+    ]
+  },
+  "installation": {
+    "zh-CN": [
+      "运行 FloraDoc-Setup-win-x64.exe，按需选择当前用户或所有用户安装，重新打开终端后运行 floradoc --version。",
+      "便携 ZIP 解压后运行 floradoc.exe；便携包不配置 PATH，也不支持在线更新或安装器卸载。"
+    ],
+    "en": [
+      "Run FloraDoc-Setup-win-x64.exe and choose per-user or all-users installation. Reopen the terminal and run floradoc --version.",
+      "Extract the portable ZIP and run floradoc.exe. The portable package does not configure PATH or support online updates or installer uninstall."
+    ]
+  },
+  "assets": [
+    {
+      "name": "FloraDoc Word Preview Windows x64 Installer",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "installer",
+      "fileName": "FloraDoc-Setup-win-x64.exe",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.5/FloraDoc-Setup-win-x64.exe",
+      "fileSize": 10119832,
+      "sha256": "421f50af2cf3474e557fcef3a83656a31ef6ee8571ffb7f3f7124f653f1e3c7d"
+    },
+    {
+      "name": "FloraDoc Word Preview Windows x64 Portable ZIP",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "zip",
+      "fileName": "FloraDoc-Word-Preview-win-x64.zip",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.5/FloraDoc-Word-Preview-win-x64.zip",
+      "fileSize": 14432787,
+      "sha256": "c69694aa09913a05cbb9fa5a28617f2a23f31c2bcd984dba2dee58febe311a6a"
+    }
+  ],
+  "checksumsUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.5/SHA256SUMS.txt"
+}
