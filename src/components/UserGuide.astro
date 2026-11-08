@@ -1,0 +1,127 @@
+---
+import type { Locale } from "../lib/types";
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isEn = locale === "en";
+const title = isEn ? "FloraDoc command-line guide" : "FloraDoc 命令行使用指南";
+const subtitle = isEn
+  ? "Install the Windows Preview, prepare a project, and build DOCX, XLSX, or offline HTML with copy-ready PowerShell commands."
+  : "从 Windows Preview 安装开始，准备项目，并用可复制的 PowerShell 命令生成 DOCX、XLSX 或离线 HTML。";
+const sections = isEn ? [
+  {
+    id: "start", title: "1. Install and prepare a project",
+    summary: "The installer adds floradoc to PATH. Reopen PowerShell, copy the package examples into a writable folder, and initialize the optional project settings.",
+    code: `$installDir = Split-Path -Parent (Get-Command floradoc).Source
+$workspace = Join-Path $HOME 'FloraDocDemo'
+New-Item -ItemType Directory -Force -Path (Join-Path $workspace 'examples') | Out-Null
+New-Item -ItemType Directory -Force -Path (Join-Path $workspace 'output') | Out-Null
+Copy-Item -LiteralPath (Join-Path $installDir 'Examples\\docx') -Destination (Join-Path $workspace 'examples\\docx') -Recurse -Force
+Copy-Item -LiteralPath (Join-Path $installDir 'Examples\\multiformat') -Destination (Join-Path $workspace 'examples\\multiformat') -Recurse -Force
+Set-Location $workspace
+floradoc init .
+floradoc --version`,
+    notes: ["Project initialization is optional. FloraDoc finds the nearest .floradoc file from the source Markdown.", "Keep inputs and outputs inside the project root. Without a project, the source file directory is the workspace boundary."]
+  },
+  {
+    id: "build", title: "2. Build the four supported document outputs",
+    summary: "Use the same Markdown sample to create a styled Word file, an Excel workbook, a self-contained HTML document, or a self-contained slide deck.",
+    code: `floradoc build --input .\\examples\\multiformat\\unified-delivery.md --target docx --output .\\output\\unified.docx --style style.technical-blue@1.0.0 --validate --json
+floradoc build --input .\\examples\\multiformat\\unified-delivery.md --target xlsx --output .\\output\\unified.xlsx --style style.technical-blue@1.0.0 --json
+floradoc build --input .\\examples\\multiformat\\unified-delivery.md --target html-doc --output .\\output\\unified.html --json
+floradoc build --input .\\examples\\multiformat\\unified-delivery.md --target html-slides --output .\\output\\unified-slides.html --json`,
+    notes: ["HTML-DOC includes a table of contents and print styles. HTML-DOC and HTML-SLIDES both use .html, so select the target explicitly.", "HTML files embed supported local images and styles. They can be opened offline in a browser.", "XLSX supports tables, images, sheet headings, merged cells, widths, explicit formulas, and image anchors. FloraDoc does not calculate formula results."]
+  },
+  {
+    id: "resources", title: "3. Select styles and inspect tools",
+    summary: "List the exact resource IDs and versions shipped with the package before using them in a build.",
+    code: `floradoc styles list
+floradoc styles show style.technical-blue@1.0.0
+floradoc templates list
+floradoc tools list
+floradoc tools inspect doc.xlsx.build
+floradoc tools doctor`,
+    notes: ["DOCX can use a supported native template. XLSX native Office templates are not supported in this Preview.", "Use --format <format.json> to supply a custom DOCX or XLSX format file. HTML builds do not accept Office styles or format JSON."]
+  },
+  {
+    id: "fill", title: "4. Fill a DOCX template with JSON",
+    summary: "The package includes a template and matching data file. Fill creates a new DOCX and does not overwrite an existing output.",
+    code: `floradoc fill --template .\\examples\\docx\\fill-template.docx --data .\\examples\\docx\\fill-data.json --output .\\output\\filled.docx --json`,
+    notes: ["For an existing output name, choose a new path. Fill has no --overwrite option.", "If a value is missing or a placeholder cannot be resolved, inspect the JSON diagnostics and template fields."]
+  },
+  {
+    id: "markdown", title: "5. Add Markdown bindings and render hints",
+    summary: "The multi-format sample demonstrates shared info values, reusable rich content, and XLSX-only annotations.",
+    code: "```info\n- Organization: Example Team\n- Report Number: 001\n```\n\nWelcome, {{Organization}}.\n\n<!-- fd:xlsx-table merge=\"A1:B1\" widths=\"A:28,B:18\" -->\n| Monthly summary | |\n|---|---|\n| Total | 120 |\n\n<!-- fd:xlsx-cell at=\"B2\" formula=\"SUM('Data'!B2:B2)\" -->\n\n## Company Profile {Company Info}\n\nThe profile can contain lists, tables, and paragraphs.\n\n## Report\n\n{{Company Info}}",
+    notes: ["Info shorthand values are strings. Use a JSON info object for typed numbers, booleans, null, objects, or arrays.", "Rich-content declarations are hidden at the source location and expanded at their reference. Duplicate names, missing values, recursion, and unsafe render hints produce diagnostics.", "XLSX annotations must sit next to the table or image they describe."]
+  },
+  {
+    id: "update", title: "6. Update and know the Preview limits",
+    summary: "Installer-based installations can check the HTTPS update feed. The portable ZIP is updated by downloading a new archive.",
+    code: `floradoc update
+Get-FileHash .\\output\\unified.xlsx -Algorithm SHA256`,
+    notes: ["The updater verifies the installer SHA-256 before starting it. A feed or hash error is not a successful update.", "PPTX remains experimental. DOCX Extract/Rebuild/Compare/Roundtrip have limited coverage; unsupported or unevaluated structures are reported.", "DOCX batch and watch are not supported in this Preview. XLSX and HTML do not accept the DOCX-only --validate or --strict options."]
+  }
+] : [
+  {
+    id: "start", title: "1. 安装并准备项目",
+    summary: "安装器会把 floradoc 命令加入 PATH。重新打开 PowerShell，将安装包示例复制到可写目录，并初始化可选项目配置。",
+    code: `$installDir = Split-Path -Parent (Get-Command floradoc).Source
+$workspace = Join-Path $HOME 'FloraDocDemo'
+New-Item -ItemType Directory -Force -Path (Join-Path $workspace 'examples') | Out-Null
+New-Item -ItemType Directory -Force -Path (Join-Path $workspace 'output') | Out-Null
+Copy-Item -LiteralPath (Join-Path $installDir 'Examples\\docx') -Destination (Join-Path $workspace 'examples\\docx') -Recurse -Force
+Copy-Item -LiteralPath (Join-Path $installDir 'Examples\\multiformat') -Destination (Join-Path $workspace 'examples\\multiformat') -Recurse -Force
+Set-Location $workspace
+floradoc init .
+floradoc --version`,
+    notes: ["项目初始化是可选的。FloraDoc 从源 Markdown 所在位置向上查找最近的 .floradoc。", "输入和输出要放在项目根目录内；没有项目时，源文件目录就是安全工作区。"]
+  },
+  {
+    id: "build", title: "2. 构建四种支持的文档格式",
+    summary: "用同一份 Markdown 样例生成 Word、Excel 工作簿、单文件 HTML 文档或单文件 HTML 幻灯片。",
+    code: `floradoc build --input .\\examples\\multiformat\\unified-delivery.md --target docx --output .\\output\\unified.docx --style style.technical-blue@1.0.0 --validate --json
+floradoc build --input .\\examples\\multiformat\\unified-delivery.md --target xlsx --output .\\output\\unified.xlsx --style style.technical-blue@1.0.0 --json
+floradoc build --input .\\examples\\multiformat\\unified-delivery.md --target html-doc --output .\\output\\unified.html --json
+floradoc build --input .\\examples\\multiformat\\unified-delivery.md --target html-slides --output .\\output\\unified-slides.html --json`,
+    notes: ["HTML-DOC 带目录和打印样式。HTML-DOC 与 HTML-SLIDES 都使用 .html 扩展名，请通过 --target 明确选择。", "HTML 文件内嵌支持的本地图片和样式，可在浏览器中离线打开。", "XLSX 支持表格、图片、标题工作表、合并单元格、列宽、显式公式和图片锚点；公式结果由 Excel 计算。"]
+  },
+  {
+    id: "resources", title: "3. 选择样式并检查工具",
+    summary: "先列出安装包提供的精确资源 ID 和版本，再在命令中使用。",
+    code: `floradoc styles list
+floradoc styles show style.technical-blue@1.0.0
+floradoc templates list
+floradoc tools list
+floradoc tools inspect doc.xlsx.build
+floradoc tools doctor`,
+    notes: ["DOCX 可选择支持的原生模板；本 Preview 不支持 XLSX 原生 Office Template。", "--format <format.json> 可提供自定义 DOCX/XLSX 格式。HTML 不接受 Office Style 或格式 JSON。"]
+  },
+  {
+    id: "fill", title: "4. 用 JSON 填充 DOCX 模板",
+    summary: "安装包附带匹配的数据文件与 DOCX 模板。Fill 会生成新文件，不会覆盖已有输出。",
+    code: `floradoc fill --template .\\examples\\docx\\fill-template.docx --data .\\examples\\docx\\fill-data.json --output .\\output\\filled.docx --json`,
+    notes: ["目标文件已存在时请选择新的输出路径；Fill 没有 --overwrite 参数。", "字段缺失或占位符未解析时，查看 JSON 诊断和模板字段名。"]
+  },
+  {
+    id: "markdown", title: "5. 使用 Markdown 绑定和呈现提示",
+    summary: "多格式样例演示共享 info 值、可复用富内容和 XLSX 专属注释。",
+    code: "```info\n- Organization: 示例团队\n- Report Number: 001\n```\n\n欢迎，{{Organization}}。\n\n<!-- fd:xlsx-table merge=\"A1:B1\" widths=\"A:28,B:18\" -->\n| 月度摘要 | |\n|---|---|\n| 总计 | 120 |\n\n<!-- fd:xlsx-cell at=\"B2\" formula=\"SUM('数据'!B2:B2)\" -->\n\n## 公司简介 {Company Info}\n\n这里可以包含段落、列表和表格。\n\n## 报告\n\n{{Company Info}}",
+    notes: ["info 简写的值均为字符串。需要数字、布尔、null、对象或数组时使用 JSON 对象。", "富内容声明在原位置隐藏，并在引用位置展开；重复名称、缺失值、递归和不安全呈现提示会产生诊断。", "XLSX 呈现注释必须紧邻它描述的表格或图片。"]
+  },
+  {
+    id: "update", title: "6. 更新与 Preview 支持边界",
+    summary: "安装器版本可检查 HTTPS 更新清单；便携 ZIP 需要手动下载新压缩包。",
+    code: `floradoc update
+Get-FileHash .\\output\\unified.xlsx -Algorithm SHA256`,
+    notes: ["更新器启动安装器前会校验 SHA-256。清单不可用或摘要不符都不算更新成功。", "PPTX 仍属实验性；DOCX Extract/Rebuild/Compare/Roundtrip 支持有限，不支持或未评估的结构会显式报告。", "本 Preview 不支持 DOCX batch 和 watch。XLSX/HTML 不接受 DOCX 专属的 --validate 或 --strict。"]
+  }
+];
+const sectionLabel = isEn ? "On this page" : "本页目录";
+---
+<>
+  <section class="page-hero"><div class="wrap"><p class="eyebrow">{isEn ? "Public user guide · Windows x64 Preview" : "公开用户指南 · Windows x64 Preview"}</p><h1>{title}</h1><p>{subtitle}</p></div></section>
+  <section class="section section-compact"><div class="wrap guide-layout">
+    <nav class="guide-toc" aria-label={sectionLabel}><strong>{sectionLabel}</strong><ol>{sections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}</ol></nav>
+    <div class="guide-content">{sections.map((section) => <article class="guide-section" id={section.id}><h2>{section.title}</h2><p>{section.summary}</p><pre><code>{section.code}</code></pre><ul>{section.notes.map((note) => <li>{note}</li>)}</ul></article>)}</div>
+  </div></section>
+</>

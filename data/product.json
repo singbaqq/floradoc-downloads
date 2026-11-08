@@ -7,25 +7,25 @@
       "windows-x64"
     ],
     "releaseStatus": "available",
-    "documentationStatus": "comingSoon",
+    "documentationStatus": "available",
     "locales": {
       "zh-CN": {
-        "eyebrow": "面向文档交付的桌面工具",
+        "eyebrow": "面向 Windows 的命令行文档工具",
         "title": "从 Markdown 出发，完成可重复的文档交付。",
-        "description": "FloraDoc 将 Markdown、样式与模板、桌面工作区和命令行工具连接起来，让文档生成过程清晰、可检查、可复用。",
+        "description": "FloraDoc 从 Markdown 构建 DOCX、XLSX 和可离线阅读的 HTML 文档/幻灯片，并支持 DOCX 模板填充。",
         "heroCta": "了解产品能力",
         "downloadCta": "查看下载状态",
-        "intro": "围绕一份可读、可维护的 Markdown 源文件，组织文档构建、工具执行、资源和运行记录。",
+        "intro": "围绕一份可读、可维护的 Markdown 源文件，构建多格式文档、管理样式与模板，并检查结果和诊断。",
         "workflowTitle": "让文件保持清晰，让交付过程可追踪",
-        "workflowBody": "以工作区中的 Markdown、样式与模板作为输入，通过 FloraDoc 桌面应用或 CLI 运行构建，并查看结构化结果。",
+        "workflowBody": "将 Markdown、图片与可选格式资源放入项目工作区，通过 floradoc CLI 选择目标格式并生成文档。",
         "screenshotTitle": "FloraDoc 桌面端",
         "screenshotCaption": "来自 FloraDoc 桌面应用的真实界面截图。",
         "screenshotPending": "界面预览准备中",
         "screenshotPendingBody": "正式产品截图尚未收录。我们会在确认当前版本界面后补充。",
         "releaseTitle": "软件下载",
-        "releaseBody": "公开发行包与校验信息准备就绪后，将在这里提供下载。",
+        "releaseBody": "Windows x64 Preview 现已提供安装器和便携 ZIP；下载页列出系统要求、发行说明和 SHA-256。",
         "docsTitle": "使用文档",
-        "docsBody": "面向用户的正式使用文档正在整理中。内部设计与开发资料不会作为公开文档发布。",
+        "docsBody": "公开指南包含项目初始化、DOCX/XLSX/HTML 构建、模板填充、常用参数和可复制的 PowerShell 示例。",
         "supportTitle": "技术支持与反馈",
         "supportBody": "公开反馈渠道尚未配置。发布前会补充可用的支持入口。",
         "features": [
@@ -38,19 +38,25 @@
           {
             "id": "doc-build",
             "title": "生成 Word 与 Excel 文档",
-            "summary": "使用样式资源将 Markdown 构建为 DOCX 或 XLSX，并生成结构化构建和运行报告。",
+            "summary": "通过 CLI 从 Markdown 创建 DOCX，或用 JSON 数据填充 DOCX 模板。DOCX 支持 Style、经验证的 Office-native Template 和结构检查。",
+            "status": "supported"
+          },
+          {
+            "id": "multi-format",
+            "title": "生成 XLSX 与离线 HTML",
+            "summary": "从同一份 Markdown 创建 XLSX 工作簿、离线 HTML 文档或 HTML 幻灯片；表格、图片、分页和格式提示按目标格式渲染。",
             "status": "supported"
           },
           {
             "id": "templates",
             "title": "复用样式与 Word 模板",
-            "summary": "从资源目录选择样式与受支持的原生 DOCX 模板；XLSX 原生模板适配目前不支持。",
+            "summary": "从资源目录查询并选择 Style 与支持的 DOCX 模板；当前不支持 XLSX 原生 Office Template。",
             "status": "supported"
           },
           {
             "id": "workspace",
             "title": "项目工作区与资源管理",
-            "summary": "通过桌面端或 CLI 创建、检查和校验文档项目；管理模板、样例、文档、图片和附件目录。",
+            "summary": "通过 floradoc init 创建可选项目配置；按项目安全边界组织 Markdown、图片、格式文件、模板和输出。",
             "status": "supported"
           },
           {
@@ -75,25 +81,25 @@
         "scenarios": [
           {
             "title": "样式化技术文档",
-            "body": "从 Markdown 和样式资源生成一致的 DOCX 文档。"
+            "body": "使用 Markdown 和 Style 生成 DOCX，或通过 JSON 数据填充 DOCX 模板。"
           },
           {
             "title": "结构化表格输出",
-            "body": "将 Markdown 内容按已配置格式输出为 XLSX 工作簿。"
+            "body": "将表格和图片生成 XLSX，或导出单文件离线 HTML 文档/演示稿。"
           },
           {
             "title": "可复查的自动化构建",
-            "body": "通过 CLI 或流程描述文件执行工具，并查看每一步的状态与产物报告。"
+            "body": "使用结构化 CLI 结果和诊断，让每次生成都可检查。"
           }
         ],
         "faqs": [
           {
             "question": "现在可以下载 FloraDoc 吗？",
-            "answer": "公开 Release 仓与正式安装包尚未建立。下载入口会在真实版本发布后开放；目前页面不会显示虚构的文件或校验值。"
+            "answer": "可以。当前公开的是 FloraDoc 0.1.7 Windows x64 Preview，下载页提供真实安装器、便携 ZIP、系统要求和 SHA-256。"
           },
           {
             "question": "支持哪些系统？",
-            "answer": "当前可核实的发布目标为 Windows x64。正式版本发布时会公布具体系统版本要求。"
+            "answer": "当前 Preview 面向 Windows 10 或更新版本的 x64 系统；不需要安装 .NET SDK、Python 或 Microsoft Word。"
           },
           {
             "question": "可以把 DOCX 完整往返还原吗？",
@@ -105,11 +111,11 @@
           },
           {
             "question": "如何安装 FloraDoc？",
-            "answer": "公开安装包尚未发布。正式发行后，下载中心会标明文件类型、系统要求和安装说明；当前不会提供占位文件。"
+            "answer": "可使用安装器配置 PATH，也可解压便携 ZIP 后直接运行 floradoc.exe。安装器版可使用 floradoc update；便携 ZIP 不支持该更新流程。"
           },
           {
             "question": "可以处理哪些文件格式？",
-            "answer": "当前有 Markdown 输入与 DOCX、XLSX 输出能力。原生 XLSX 模板适配尚不支持；PPTX 构建目前仍属实验性。"
+            "answer": "输入为 Markdown；当前支持 DOCX 创建与模板填充、XLSX、单文件 HTML 文档和 HTML 幻灯片。PPTX 仍属实验性，XLSX 原生模板暂不支持。"
           },
           {
             "question": "如何校验下载文件？",
@@ -117,31 +123,35 @@
           },
           {
             "question": "如何获取更新？",
-            "answer": "正式稳定版发布后，下载中心会展示版本号、发行日期、更新摘要和真实文件。也可以在发行记录中查看历史版本。"
+            "answer": "通过安装器安装的用户可运行 floradoc update。更新器通过 HTTPS 获取版本说明和安装器，并在启动前校验 SHA-256。便携 ZIP 请手动下载新版。"
           },
           {
             "question": "遇到问题时在哪里反馈？",
             "answer": "公开反馈渠道尚未配置。反馈入口会在确认可用后添加到网站。"
+          },
+          {
+            "question": "在哪里可以查看命令实例？",
+            "answer": "打开导航中的“使用文档”，查看项目初始化、DOCX/XLSX/HTML 构建、模板填充和更新器的 PowerShell 命令示例。"
           }
         ]
       },
       "en": {
-        "eyebrow": "A desktop workspace for document delivery",
+        "eyebrow": "A command-line document builder for Windows",
         "title": "Start with Markdown. Deliver documents you can review and repeat.",
-        "description": "FloraDoc brings Markdown, styles and templates, a desktop workspace, and command-line tools into a clear, reusable document workflow.",
+        "description": "FloraDoc builds DOCX, XLSX, and offline HTML documents or slide decks from Markdown, and fills DOCX templates with JSON data.",
         "heroCta": "Explore product capabilities",
         "downloadCta": "Check download status",
-        "intro": "Organize document builds, tool runs, resources, and reports around readable Markdown source files.",
+        "intro": "Build multiple document formats from readable Markdown, select styles and templates, and inspect results and diagnostics.",
         "workflowTitle": "Keep the files clear. Make the process traceable.",
-        "workflowBody": "Build from Markdown and selected styles or templates in a workspace, run the process through FloraDoc Desktop or the CLI, then inspect structured results.",
+        "workflowBody": "Keep Markdown, images, and optional format resources in a project workspace. Use the floradoc CLI to select an output format and build the file.",
         "screenshotTitle": "FloraDoc for desktop",
         "screenshotCaption": "A genuine screenshot from the FloraDoc desktop application.",
         "screenshotPending": "Interface preview coming soon",
         "screenshotPendingBody": "An approved product screenshot has not been added yet. We will add one after confirming the current application version.",
         "releaseTitle": "Download FloraDoc",
-        "releaseBody": "Downloads and checksums will appear here when an official release is ready.",
+        "releaseBody": "The Windows x64 Preview is available as an installer and portable ZIP. The download page lists requirements, release notes, and SHA-256 values.",
         "docsTitle": "User documentation",
-        "docsBody": "Public user documentation is being prepared. Internal design and development material will not be published as user guidance.",
+        "docsBody": "The public guide covers project setup, DOCX/XLSX/HTML builds, template filling, common options, and copy-ready PowerShell examples.",
         "supportTitle": "Support and feedback",
         "supportBody": "A public support channel has not been configured yet. A verified contact option will be added before release.",
         "features": [
@@ -154,19 +164,25 @@
           {
             "id": "doc-build",
             "title": "Word and Excel output",
-            "summary": "Build DOCX or XLSX files from Markdown and style resources, with structured build and run reports.",
+            "summary": "Create DOCX files from Markdown or fill DOCX templates with JSON data. DOCX supports Styles, supported native templates, and structural validation.",
+            "status": "supported"
+          },
+          {
+            "id": "multi-format",
+            "title": "XLSX and offline HTML output",
+            "summary": "Build XLSX workbooks, offline HTML documents, or HTML slide decks from the same Markdown source. Tables, images, page breaks, and render hints are handled per target.",
             "status": "supported"
           },
           {
             "id": "templates",
             "title": "Reusable styles and Word templates",
-            "summary": "Select styles and supported native DOCX templates from the resource catalog. Native XLSX template adapters are not currently supported.",
+            "summary": "Browse and select Styles and supported DOCX templates from the resource catalog. Native XLSX Office templates are not currently supported.",
             "status": "supported"
           },
           {
             "id": "workspace",
             "title": "Project workspace and resources",
-            "summary": "Create, inspect, and validate document projects through Desktop or CLI, with directories for templates, examples, documents, images, and attachments.",
+            "summary": "Use floradoc init for optional project settings and keep Markdown, images, formats, templates, and outputs within the project boundary.",
             "status": "supported"
           },
           {
@@ -191,25 +207,25 @@
         "scenarios": [
           {
             "title": "Styled technical documents",
-            "body": "Generate consistent DOCX files from Markdown and style resources."
+            "body": "Create a styled DOCX from Markdown or fill a DOCX template with JSON data."
           },
           {
             "title": "Structured spreadsheet output",
-            "body": "Map Markdown content into XLSX workbooks using configured format files."
+            "body": "Build XLSX tables and images, or export a single-file offline HTML document or presentation."
           },
           {
             "title": "Reviewable automation",
-            "body": "Run tools from the CLI or workflow manifests and inspect each step and its output report."
+            "body": "Inspect structured CLI results and diagnostics after each build."
           }
         ],
         "faqs": [
           {
             "question": "Can I download FloraDoc today?",
-            "answer": "The public release repository and official installer are not available yet. Downloads will appear after a real release; this site will not show invented files or checksums."
+            "answer": "Yes. FloraDoc 0.1.7 Preview for Windows x64 is published with a real installer, portable ZIP, system requirements, and SHA-256 values."
           },
           {
             "question": "Which systems are supported?",
-            "answer": "The currently documented package target is Windows x64. Exact Windows version requirements will be published with a stable release."
+            "answer": "The current Preview targets Windows 10 or later on x64. The package does not require the .NET SDK, Python, or Microsoft Word."
           },
           {
             "question": "Can every DOCX round-trip without loss?",
@@ -221,11 +237,11 @@
           },
           {
             "question": "How do I install FloraDoc?",
-            "answer": "An official installer has not been published. Once a release is available, the download center will show the file type, system requirements, and installation guidance. No placeholder file is offered."
+            "answer": "Use the installer to configure PATH, or extract the portable ZIP and run floradoc.exe. Installer users can run floradoc update; the portable ZIP does not support that update flow."
           },
           {
             "question": "Which file formats can FloraDoc handle?",
-            "answer": "The current workflow accepts Markdown and can build DOCX and XLSX files. Native XLSX template adapters are not supported yet; PPTX builds remain experimental."
+            "answer": "Markdown input supports DOCX creation and template filling, XLSX, single-file HTML documents, and HTML slide decks. PPTX remains experimental; native XLSX templates are not supported yet."
           },
           {
             "question": "How do I verify a download?",
@@ -233,11 +249,15 @@
           },
           {
             "question": "How do I get updates?",
-            "answer": "After an official stable version is released, the download center will show its version, date, summary, and real files. The release history lists earlier versions."
+            "answer": "Run floradoc update for an installer-based installation. The updater reads version notes and downloads over HTTPS, verifies SHA-256, then starts the installer. Portable ZIP users should download a new archive manually."
           },
           {
             "question": "Where can I report a problem?",
             "answer": "A public feedback channel has not been configured yet. A verified contact option will be added when available."
+          },
+          {
+            "question": "Where can I find command examples?",
+            "answer": "Open Documentation for PowerShell examples covering project setup, DOCX/XLSX/HTML builds, template filling, and updates."
           }
         ]
       }

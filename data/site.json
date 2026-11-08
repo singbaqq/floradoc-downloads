@@ -9,7 +9,7 @@
     "releaseRepository": "floradoc-release",
     "feedbackUrl": null
   },
-  "documentationUrl": null,
+  "documentationUrl": "https://floradoc.aitodo.net/docs/",
   "releaseSync": {
     "apiVersion": "2022-11-28",
     "timeoutMs": 15000

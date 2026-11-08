@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0",
+  "version": "0.1.7",
+  "tag": "v0.1.7",
+  "channel": "preview",
+  "releaseDate": "2026-11-08",
+  "releaseNotes": {
+    "zh-CN": [
+      "新增从同一份 Markdown 构建 DOCX、XLSX、离线 HTML 文档和 HTML 幻灯片。",
+      "XLSX 支持样式、工作表、表格、本地图片、合并单元格、列宽、显式公式和图片锚点；公式结果由 Excel 计算。",
+      "HTML 文档包含目录、响应式阅读与打印样式；HTML 幻灯片支持章节导航、键盘控制和 PAGEBREAK 分页。",
+      "DOCX、XLSX 和 HTML 共享 info 值、文本占位符和富内容引用。安装包增加多格式示例和中英文命令指南。"
+    ],
+    "en": [
+      "Build DOCX, XLSX, offline HTML documents, and HTML slide decks from the same Markdown source.",
+      "XLSX supports styles, worksheets, tables, local images, merged cells, column widths, explicit formulas, and image anchors; Excel calculates formula results.",
+      "HTML documents include a table of contents, responsive reading, and print styles. HTML slide decks support section navigation, keyboard controls, and PAGEBREAK breaks.",
+      "DOCX, XLSX, and HTML share info values, text placeholders, and reusable rich-content references. The package includes multi-format examples and a bilingual command guide."
+    ]
+  },
+  "requirements": {
+    "zh-CN": [
+      "Windows 10 或更新版本，x64。",
+      "无需单独安装 .NET SDK、Python 或 Microsoft Word。"
+    ],
+    "en": [
+      "Windows 10 or later, x64.",
+      "No separate .NET SDK, Python, or Microsoft Word installation is required."
+    ]
+  },
+  "installation": {
+    "zh-CN": [
+      "安装器：下载并运行 FloraDoc-Setup-win-x64.exe，按安装向导完成安装，然后重新打开 PowerShell 并运行 floradoc --version。",
+      "便携 ZIP：解压到可写目录，在该目录运行 .\\floradoc.exe --version；如需从其他目录调用，请自行将解压目录加入 PATH。",
+      "安装器版本可运行 floradoc update 检查更新；便携 ZIP 通过下载新版并重新解压更新。"
+    ],
+    "en": [
+      "Installer: download and run FloraDoc-Setup-win-x64.exe, follow the setup wizard, open a new PowerShell window, and run floradoc --version.",
+      "Portable ZIP: extract it to a writable folder and run .\\floradoc.exe --version there. Add the extracted folder to PATH if you want to call it from other directories.",
+      "Installer-based installations can check updates with floradoc update. Update a portable ZIP by downloading and extracting the new archive."
+    ]
+  },
+  "assets": [
+    {
+      "name": "FloraDoc Windows x64 Multi-format Preview Installer",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "installer",
+      "fileName": "FloraDoc-Setup-win-x64.exe",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.7/FloraDoc-Setup-win-x64.exe",
+      "fileSize": 10522433,
+      "sha256": "882f457b41a4e2ff1ed58b6ebc62afbcce5d1b0cb990cb593618da20b456447c"
+    },
+    {
+      "name": "FloraDoc Windows x64 Multi-format Preview Portable ZIP",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "zip",
+      "fileName": "FloraDoc-Word-Preview-win-x64.zip",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.7/FloraDoc-Word-Preview-win-x64.zip",
+      "fileSize": 15087727,
+      "sha256": "7936b3ff942cc1bda86d93ed99b0eb4c99da2cbe3e838faed23a73742da1c7f9"
+    }
+  ],
+  "checksumsUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.7/SHA256SUMS.txt"
+}

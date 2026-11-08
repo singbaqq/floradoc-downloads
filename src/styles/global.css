@@ -148,12 +148,27 @@ img { max-width: 100%; display: block; }
 .error-page { display: grid; min-height: 68vh; place-content: center; text-align: center; }
 .error-page h1 { margin: 0; font-family: Georgia,serif; font-size: clamp(4rem,10vw,8rem); }
 .error-page p { color: var(--muted); }
+.guide-layout { display: grid; grid-template-columns: minmax(190px, 245px) minmax(0, 1fr); align-items: start; gap: 30px; }
+.guide-toc { position: sticky; top: 94px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: #fffefa; }
+.guide-toc strong { display: block; margin-bottom: 12px; }
+.guide-toc ol { display: grid; gap: 8px; margin: 0; padding-left: 20px; color: var(--muted); }
+.guide-toc a { color: inherit; text-decoration: none; line-height: 1.45; }
+.guide-toc a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.guide-content { min-width: 0; display: grid; gap: 20px; }
+.guide-section { scroll-margin-top: 96px; padding: clamp(20px,3vw,32px); border: 1px solid var(--line); border-radius: 20px; background: #fffefa; }
+.guide-section h2 { margin: 0 0 10px; font-size: clamp(1.25rem,2.4vw,1.7rem); }
+.guide-section p { color: var(--muted); line-height: 1.75; }
+.guide-section pre { max-width: 100%; overflow: auto; margin: 18px 0; padding: 18px; border: 1px solid #263641; border-radius: 12px; background: #15232c; color: #eef5f7; font: .86rem/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; tab-size: 2; }
+.guide-section pre code { white-space: pre; }
+.guide-section ul { display: grid; gap: 8px; padding-left: 22px; color: #626a63; line-height: 1.7; }
 @media (max-width: 880px) {
   .nav-links { gap: 15px; font-size: .83rem; }
   .hero-layout { grid-template-columns: 1fr; gap: 20px; }
   .hero { padding-top: 60px; }
   .hero-visual { min-height: 360px; }
   .grid-3 { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .guide-layout { grid-template-columns: 1fr; }
+  .guide-toc { position: static; }
 }
 @media (max-width: 650px) {
   .wrap { width: min(100% - 32px, 1160px); }

@@ -24,7 +24,17 @@ for (const page of requiredPages) if (!relativeFiles.has(page)) throw new Error(
 const englishHome = await readFile(path.join(root, "en", "index.html"), "utf8");
 if (!/<html lang="en">/.test(englishHome)) throw new Error("English homepage is missing its language declaration.");
 const chineseHome = await readFile(path.join(root, "index.html"), "utf8");
-if (!chineseHome.includes("正式下载尚未发布") || !englishHome.includes("official downloads not yet published") || !chineseHome.includes("即将开放") || !englishHome.includes("Coming soon")) throw new Error("Empty-release state is missing from one of the localized home pages.");
+const updateManifestPath = path.join(root, "downloads", "latest.json");
+let updateManifest: { schemaVersion: string; version: string; packageUrl: string; sha256: string } | null = null;
+try { updateManifest = JSON.parse(await readFile(updateManifestPath, "utf8")) as typeof updateManifest; } catch {}
+if (updateManifest) {
+  if (updateManifest.schemaVersion !== "1.0" || !/^\d+\.\d+\.\d+$/.test(updateManifest.version) || !updateManifest.packageUrl.startsWith("https://") || !/^[a-f0-9]{64}$/i.test(updateManifest.sha256)) throw new Error("Published update manifest is malformed.");
+  const releaseLabel = "FloraDoc " + updateManifest.version;
+  if (!chineseHome.includes(releaseLabel) || !englishHome.includes(releaseLabel)) throw new Error("Localized home pages do not show the latest published version.");
+  if (chineseHome.includes("正式下载尚未发布") || englishHome.includes("official downloads not yet published")) throw new Error("A localized home page still claims that downloads are unpublished.");
+} else if (!chineseHome.includes("正式下载即将开放") || !englishHome.includes("Official downloads are coming soon") || !chineseHome.includes("即将开放") || !englishHome.includes("Coming soon")) {
+  throw new Error("Empty-release state is missing from one of the localized home pages.");
+}
 for (const [page, html] of [["zh-CN", chineseHome], ["en", englishHome]] as const) {
   if (!html.includes('property="og:title"') || !html.includes('rel="canonical"') || !html.includes('application/ld+json')) throw new Error("SEO metadata is incomplete for the " + page + " homepage.");
 }
