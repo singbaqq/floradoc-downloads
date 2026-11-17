@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0",
+  "version": "0.1.10",
+  "tag": "v0.1.10",
+  "channel": "preview",
+  "releaseDate": "2026-11-17",
+  "releaseNotes": {
+    "zh-CN": [
+      "Windows x64 安装包和便携 ZIP 现附带 HTML-DOC 与 HTML-SLIDES 模板、共用 Markdown 示例及本地图片。",
+      "HTML-SLIDES 示例采用 V4 页面框架；安装包构建会实际运行两个模板示例，检查 HTML-DOC 与 HTML-SLIDES 声明路由。"
+    ],
+    "en": [
+      "The Windows x64 installer and portable ZIP now include HTML-DOC and HTML-SLIDES templates, a shared Markdown example, and its local image asset.",
+      "The HTML-SLIDES example uses the V4 viewer framework. Package smoke checks build both template examples and verify their declared renderer routes."
+    ]
+  },
+  "requirements": {
+    "zh-CN": [
+      "Windows 10 或更新版本，x64。",
+      "无需单独安装 .NET SDK、Python 或 Microsoft Word。"
+    ],
+    "en": [
+      "Windows 10 or later, x64.",
+      "No separate .NET SDK, Python, or Microsoft Word installation is required."
+    ]
+  },
+  "installation": {
+    "zh-CN": [
+      "安装器：运行 FloraDoc-Setup-win-x64.exe，按向导安装，重新打开 PowerShell 后运行 floradoc --version。",
+      "便携 ZIP：解压到可写目录，在解压目录内运行 .\\floradoc.exe --version。",
+      "将 Examples\\multiformat 复制到工作目录，使用 unified-delivery.md 与 templates 子目录中的模板生成 HTML-DOC 或 HTML-SLIDES。"
+    ],
+    "en": [
+      "Installer: run FloraDoc-Setup-win-x64.exe, follow the setup wizard, open a new PowerShell window, and run floradoc --version.",
+      "Portable ZIP: extract it to a writable directory and run .\\floradoc.exe --version there.",
+      "Copy Examples\\multiformat into a working directory and use unified-delivery.md with a template in its templates folder to build HTML-DOC or HTML-SLIDES."
+    ]
+  },
+  "assets": [
+    {
+      "name": "FloraDoc for Windows x64",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "installer",
+      "fileName": "FloraDoc-Setup-win-x64.exe",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.10/FloraDoc-Setup-win-x64.exe",
+      "fileSize": 13527019,
+      "sha256": "6dd458407b2f0bbc9cb9540a06af6d18094cbea1e16a98ae7b7178347309a097"
+    },
+    {
+      "name": "FloraDoc Portable Preview for Windows x64",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "zip",
+      "fileName": "FloraDoc-Word-Preview-win-x64.zip",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.10/FloraDoc-Word-Preview-win-x64.zip",
+      "fileSize": 19915482,
+      "sha256": "f252a7cfc87b3f87fe93b99cf2df7dc494c5d6ec9f459f6a8a862bb764827c8a"
+    }
+  ],
+  "checksumsUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.10/SHA256SUMS.txt"
+}
