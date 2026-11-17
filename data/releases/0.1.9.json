@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0",
+  "version": "0.1.9",
+  "tag": "v0.1.9",
+  "channel": "preview",
+  "releaseDate": "2026-11-17",
+  "releaseNotes": {
+    "zh-CN": [
+      "HTML 短命令现在可根据 HTML 模板根节点声明自动选择 HTML-DOC 或 HTML-SLIDES；无模板和未声明的历史模板仍默认使用 HTML-DOC。",
+      "HTML-DOC 与 HTML-SLIDES 默认将支持的本地图片转为 Base64 嵌入单个 HTML；--copy-assets 可将图片复制到相邻资源目录。图片支持点击放大、拖动平移、滚轮缩放及快捷关闭。",
+      "安装包新增 HTML 报告模板指南和 floradoc-multiformat Agent Skill，并更新中文使用说明。"
+    ],
+    "en": [
+      "HTML short commands now select HTML-DOC or HTML-SLIDES from the root declaration in a supplied HTML template. No template and undeclared legacy templates continue to default to HTML-DOC.",
+      "HTML-DOC and HTML-SLIDES embed supported local images as Base64 in one HTML file by default. --copy-assets copies images to an adjacent assets directory. Images support click-to-enlarge, drag panning, wheel zoom, and keyboard/backdrop dismissal.",
+      "The package now includes the HTML report template guide and floradoc-multiformat Agent Skill, with an updated user guide."
+    ]
+  },
+  "requirements": {
+    "zh-CN": [
+      "Windows 10 或更新版本，x64。",
+      "无需单独安装 .NET SDK、Python 或 Microsoft Word。"
+    ],
+    "en": [
+      "Windows 10 or later, x64.",
+      "No separate .NET SDK, Python, or Microsoft Word installation is required."
+    ]
+  },
+  "installation": {
+    "zh-CN": [
+      "安装器：下载并运行 FloraDoc-Setup-win-x64.exe，按向导安装，重新打开 PowerShell 后运行 floradoc --version。",
+      "便携 ZIP：解压到可写目录，在目录内运行 .\\floradoc.exe --version；可将目录加入 PATH 以便从其它位置调用。",
+      "安装器版本可用 floradoc update 检查更新；便携 ZIP 通过下载新版并重新解压更新。"
+    ],
+    "en": [
+      "Installer: run FloraDoc-Setup-win-x64.exe, follow the setup wizard, open a new PowerShell window, and run floradoc --version.",
+      "Portable ZIP: extract it to a writable directory and run .\\floradoc.exe --version there. Add the directory to PATH to call it elsewhere.",
+      "Installer-based installations can check for updates with floradoc update. Update a portable ZIP by downloading and extracting the new archive."
+    ]
+  },
+  "assets": [
+    {
+      "name": "FloraDoc for Windows x64",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "installer",
+      "fileName": "FloraDoc-Setup-win-x64.exe",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.9/FloraDoc-Setup-win-x64.exe",
+      "fileSize": 13513935,
+      "sha256": "a76916e5be3477cf5c6398c748c224e38ba609d8ae31ef9778ce8e60cc7880c8"
+    },
+    {
+      "name": "FloraDoc Portable Preview for Windows x64",
+      "platform": "windows",
+      "architecture": "x64",
+      "format": "zip",
+      "fileName": "FloraDoc-Word-Preview-win-x64.zip",
+      "downloadUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.9/FloraDoc-Word-Preview-win-x64.zip",
+      "fileSize": 19904793,
+      "sha256": "6344177d4add3a86fe919e0b35b0a51941a4437392032456b97f4a6762e1fc12"
+    }
+  ],
+  "checksumsUrl": "https://github.com/singbaqq/floradoc-release/releases/download/v0.1.9/SHA256SUMS.txt"
+}
